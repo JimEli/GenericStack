@@ -5,25 +5,27 @@
 #include <string.h>
 #include <assert.h>
 
-#ifndef _STACK_H_
-#define _STACK_H_
+#ifndef _Stack_H_
+#define _Stack_H_
 
-typedef struct {
+struct Stack_ {
 	void *elements;
 	int elementSize;
 	int logLength;
 	int allocLength;
-} stack;
+};
 
-void stackCreate(stack *, int);
-void stackDestroy(stack *);
-bool stackEmpty(const stack *);
-bool stackPush(stack *, const void *);
-bool stackPop(stack *, void *);
-bool stackPeek(stack *, void *);
-int stackSize(stack *);
-void stackPrint(stack *, void(*print)(int *), void *);
+typedef struct Stack_ Stack;
 
 #define kInitialAllocationSize 4 
+
+bool stackCreate(Stack *, int);
+void stackDestroy(Stack *);
+bool stackEmpty(const Stack *);
+bool stackPush(Stack *, const void *);
+bool stackPop(Stack *, void *);
+bool stackPeek(Stack *, void *);
+int stackSize(Stack *);
+void stackPrint(Stack *, void(*print)(int *), void *);
 
 #endif
