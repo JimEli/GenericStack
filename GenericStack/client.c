@@ -1,39 +1,36 @@
-// Generic stack demonstration based upon code found here:
-// https://see.stanford.edu/materials/icsppcs107/stack-implementation.pdf
+// Stack demonstration based upon code found here:
+//  https://see.stanford.edu/materials/icsppcs107/Stack-implementation.pdf
 //client.c
 #include "stack.h"
 
-// Function passed as parameter to stackPrint function.
+// Function passed as parameter to StackPrint function.
 void printElement(int *element) {
 	printf("%d ", *element);
 }
 
 int main(int argc, char *argv[]) {
 	int val;
-	stack intStack;
-	
-	// Create a stack of integers.
-	stackCreate(&intStack, sizeof(int));
-	
-	// Push 0 through 6 onto stack.
-	for (val = 0; val < 6; val++)
-		stackPush(&intStack, &val);
+	Stack intStack;
 
-	// Demonstrate stack printing function.
-	stackPrint(&intStack, printElement, &val);
+	if (stackCreate(&intStack, sizeof(int))) {
+		for (val = 0; val < 6; val++)
+			stackPush(&intStack, &val);
 
-	// Size, peek and pop elements from stack.
-	while (!stackEmpty(&intStack)) {
-		printf("Stack size: %d, ", stackSize(&intStack));
-		stackPeek(&intStack, &val);
-		printf("Peek at top element: %d, ", val);
-		stackPop(&intStack, &val);
-		printf("Popped: %d off stack\n", val);
+		// Stack print function.
+		stackPrint(&intStack, printElement, &val);
+
+		while (!stackEmpty(&intStack)) {
+			printf("Stack size: %d, ", stackSize(&intStack));
+			stackPeek(&intStack, &val);
+			printf("Peek at top element: %d, ", val);
+			stackPop(&intStack, &val);
+			printf("Popped: %d off Stack\n", val);
+		}
+
+		printf("Stack size: %d\n", stackSize(&intStack));
+
+		stackDestroy(&intStack);
 	}
 
-	// Destroy the stack.
-	printf("Stack size: %d\n", stackSize(&intStack));
-	stackDestroy(&intStack);
-
-	while (getchar() != EOF); // Pause.
+	puts("\nPress Control-C to exit."); while (getchar() != EOF);
 }
